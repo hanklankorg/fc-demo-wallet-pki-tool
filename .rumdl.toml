@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2026 Digg - Agency for Digital Government
+#
+# SPDX-License-Identifier: CC0-1.0
+
+# The rule and the paths `just lint-markdown` leaves out on its command
+# line, so the pull request gate judges Markdown as `just lint-all` does.
+[global]
+disable = ["MD013"]
+exclude = [".github-shared", "node_modules", "vendor", "target", "CHANGELOG.md"]

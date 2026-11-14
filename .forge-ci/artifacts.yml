@@ -5,10 +5,24 @@
 # Artifacts Configuration for wallet-pki-tool
 # Defines what to build and where to publish
 
+# The container image is signed keyless with Sigstore and carries SBOM and
+# SLSA provenance attestations. The release files keep their OpenPGP .asc
+# signatures, made with the key in RELEASE_GPG_PRIVATE_KEY.
+sign:
+  method: sigstore
+  files-method: gpg
+
+# The release commit and the final tag are signed with the GPG key in
+# RELEASE_GPG_PRIVATE_KEY, as before.
+git-signing:
+  method: gpg
+
 artifacts:
   - name: wallet-pki-tool
     project-type: maven
     working-directory: .
+    # The JAR is built for the container image and is not published to a
+    # package registry, as before.
     build-type: application
     config:
       java-version: 25
@@ -19,4 +33,3 @@ containers:
     container-file: Containerfile
     context: .
     platforms: linux/amd64,linux/arm64
-    registry: ghcr.io
